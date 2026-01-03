@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: web-app
 spec:
-  replicas: 3 # Aqui definimos 3 Pods para o seu clister!
+  replicas: 6 # Aqui definimos 3 Pods para o seu clister!
   selector:
     matchLabels:
       app: meu-nginx
