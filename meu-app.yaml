@@ -36,4 +36,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 5678
-  type: LoadBalancer
+      nodePort: 30001 # Escolhemos uma porta fixa entre 30000-32767
+  type: NodePort
