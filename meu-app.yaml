@@ -3,27 +3,20 @@ kind: Deployment
 metadata:
   name: web-app
 spec:
-  replicas: 5
+  replicas: 3 # Aqui definimos 3 Pods para o seu clister!
   selector:
     matchLabels:
-      app: meu-app-echo
+      app: meu-nginx
   template:
     metadata:
       labels:
-        app: meu-app-echo
+        app: meu-nginx
     spec:
       containers:
-      - name: echo-container
-        image: hashicorp/http-echo
-        args:
-          - "-text=Ola! Eu sou a Pod: $(MY_POD_NAME)"
-        env:
-          - name: MY_POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
+      - name: nginx
+        image: nginx:latest
         ports:
-        - containerPort: 5678
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -31,10 +24,9 @@ metadata:
   name: web-service
 spec:
   selector:
-    app: meu-app-echo
+    app: meu-nginx
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 5678
-      nodePort: 30001 # Escolhemos uma porta fixa entre 30000-32767
-  type: NodePort
+      targetPort: 80
+  type: LoadBalancer
